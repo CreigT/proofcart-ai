@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProofCart AI — Know what changed hands. Before the money does.</title>
+  <meta name="description" content="Create a timestamped evidence record for person-to-person purchases. AI organizes evidence. People approve facts. ProofCart does not guarantee authenticity or condition." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #161e28;
+      --line: #2a3644;
+      --text: #e8eef4;
+      --muted: #93a3b5;
+      --accent: #3d8bfd;
+      --ok: #3dd68c;
+      --warn: #f5c14a;
+      --deny: #ff6b6b;
+      --sponsor: #c9a227;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif; }
+    a { color: var(--accent); }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 20px 18px 80px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0 28px; }
+    .brand { font-weight: 700; }
+    .brand span { color: var(--accent); }
+    .sponsor { font-size: 11px; color: var(--sponsor); letter-spacing: .08em; text-transform: uppercase; }
+    h1 { font-size: clamp(28px, 6vw, 46px); line-height: 1.15; margin: 0 0 14px; }
+    .sub { font-size: 18px; color: var(--muted); max-width: 640px; line-height: 1.5; }
+    .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 18px; }
+    button { appearance: none; border: 0; cursor: pointer; border-radius: 10px; padding: 12px 16px; font-weight: 600; font-size: 15px; }
+    .primary { background: var(--accent); color: #071018; }
+    .ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .trust { font-size: 13px; color: var(--muted); border-left: 3px solid var(--sponsor); padding-left: 12px; margin: 8px 0 28px; }
+    .grid { display: grid; gap: 12px; }
+    @media (min-width: 740px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    .card h3 { margin: 0 0 8px; font-size: 16px; }
+    .card p, .card li { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .tag { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ok); border: 1px solid #245a40; padding: 3px 7px; border-radius: 999px; }
+    .deny { color: var(--deny); border-color: #5a2424; }
+    .warn { color: var(--warn); border-color: #5a4a24; }
+    nav.steps { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    nav.steps button { font-size: 12px; padding: 8px 10px; background: #0f1620; color: var(--muted); border: 1px solid var(--line); }
+    nav.steps button.on { color: var(--text); border-color: var(--accent); }
+    label { display: block; font-size: 13px; margin: 10px 0 4px; color: var(--muted); }
+    input, select, textarea { width: 100%; background: #0f1620; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: inherit; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .shot { background: #0f1620; border: 1px dashed var(--line); border-radius: 10px; min-height: 78px; padding: 10px; font-size: 12px; color: var(--muted); }
+    .shot.ok { border-style: solid; border-color: #2d6a4f; color: var(--ok); }
+    .fact { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .conf { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--muted); }
+    footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
+    .hidden { display: none; }
+    .status { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--warn); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">ProofCart <span>AI</span></div>
+      <div class="sponsor">Sponsored by CREIGNIFICENT LLC</div>
+    </header>
+    <h1>Know what changed hands.<br />Before the money does.</h1>
+    <p class="sub">Create a timestamped evidence record for person-to-person purchases using photos, seller disclosures and AI-assisted organization.</p>
+    <div class="ctas">
+      <button class="primary" onclick="go('new')">Create a Proof Record</button>
+      <button class="ghost" onclick="go('buyer')">Review a Purchase</button>
+    </div>
+    <p class="trust">AI organizes evidence. People approve facts. ProofCart does not guarantee authenticity or condition.</p>
+    <div class="card" style="margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <h3 style="margin:0">V1 demo — used electronics only</h3>
+        <span class="status" id="txnStatus">STATUS: DRAFT</span>
+      </div>
+      <p>Local, in-browser walkthrough. No accounts, no uploads, no Stripe, no model calls. This is the workflow card — not a live payment system.</p>
+      <nav class="steps">
+        <button id="t-new" class="on" onclick="go('new')">New Sale</button>
+        <button id="t-cap" onclick="go('cap')">Capture</button>
+        <button id="t-ai" onclick="go('ai')">AI Review</button>
+        <button id="t-lock" onclick="go('lock')">Lock Record</button>
+        <button id="t-buyer" onclick="go('buyer')">Buyer Review</button>
+        <button id="t-pay" onclick="go('pay')">Payment</button>
+        <button id="t-receipt" onclick="go('receipt')">Receipt</button>
+      </nav>
+      <section id="s-new">
+        <div class="row">
+          <div><label>Item</label><input id="item" value="Used 14" laptop" /></div>
+          <div><label>Asking price (USD)</label><input id="price" type="number" value="700" /></div>
+        </div>
+        <label>Category</label>
+        <select id="cat"><option>Used electronics — laptop</option></select>
+        <label>Seller disclosure</label>
+        <textarea id="disc" rows="3">Powers on. Light scratch on lower-right lid. Battery holds about 3 hours. Charger included. No original box.</textarea>
+        <p><button class="primary" onclick="go('cap')">Generate evidence checklist</button></p>
+      </section>
+      <section id="s-cap" class="hidden">
+        <p>Laptop checklist. Capture is simulated — tap each slot.</p>
+        <div class="evidence">
+          <div class="shot" onclick="mark(this)">Exterior — lid</div>
+          <div class="shot" onclick="mark(this)">Exterior — base / ports</div>
+          <div class="shot" onclick="mark(this)">Powered-on screen</div>
+          <div class="shot" onclick="mark(this)">Model / serial label (private)</div>
+          <div class="shot" onclick="mark(this)">Charger + accessories</div>
+          <div class="shot" onclick="mark(this)">Disclosed scratch close-up</div>
+        </div>
+        <p><button class="primary" onclick="go('ai')">Send to AI Review</button></p>
+      </section>
+      <section id="s-ai" class="hidden">
+        <p>Extracted fields carry provenance. Low confidence stays unresolved. AI cannot grade “excellent condition.”</p>
+        <div class="fact"><span>Visible scratch, lower-right lid — image 6</span><span class="conf">conf 0.86 · UNRESOLVED until seller confirms</span></div>
+        <div class="fact"><span>Unit powers on — image 3</span><span class="conf">conf 0.91 · candidate</span></div>
+        <div class="fact"><span>Charger present — image 5</span><span class="conf">conf 0.88 · candidate</span></div>
+        <div class="fact"><span>Serial / model text</span><span class="conf">conf 0.54 · UNRESOLVED · not shown publicly</span></div>
+        <div class="fact"><span>Hidden defects / authenticity / ownership</span><span class="conf">NOT CLAIMED</span></div>
+        <p>
+          <button class="primary" onclick="confirmSeller()">Seller confirms extracted facts</button>
+          <button class="ghost" onclick="alert('Correction logged. Field remains UNRESOLVED until re-confirmed.')">Correct a field</button>
+        </p>
+      </section>
+      <section id="s-lock" class="hidden">
+        <p>Proof Record v1 locked. Price, evidence set, and seller statements are frozen. AI cannot edit after lock.</p>
+        <p><span class="tag">RECORD LOCKED</span> <span class="tag warn">BUYER NOT YET ACKNOWLEDGED</span></p>
+        <p><button class="primary" onclick="go('buyer')">Authorize intended buyer</button></p>
+      </section>
+      <section id="s-buyer" class="hidden">
+        <p>Mobile-first buyer page. Unrelated accounts do not get this view.</p>
+        <div class="fact"><span>Asking price</span><span id="bp">$700</span></div>
+        <div class="fact"><span>Included</span><span>Laptop + charger</span></div>
+        <div class="fact"><span>Seller statement</span><span>Scratch disclosed. Battery ~3 hrs.</span></div>
+        <div class="fact"><span>AI-organized uncertainty</span><span>Serial read low-confidence · not public</span></div>
+        <label><input type="checkbox" id="ack" style="width:auto" /> I reviewed this evidence package. This does not waive statutory rights. ProofCart is not an arbitrator.</label>
+        <p>
+          <button class="primary" onclick="ackBuyer()">Acknowledge and continue</button>
+          <button class="ghost" onclick="setStatus('CANCELLED'); alert('Buyer rejected the package.')">Reject</button>
+        </p>
+      </section>
+      <section id="s-pay" class="hidden">
+        <p>V1 price: <strong>$4.99</strong> per completed evidence package. Stripe Checkout would be server-created. The browser never decides paid.</p>
+        <p><span class="tag deny">DEMO — NO CHARGE</span> Signed webhook is authoritative in production.</p>
+        <p><button class="primary" onclick="fakePay()">Simulate signed webhook: paid once</button></p>
+      </section>
+      <section id="s-receipt" class="hidden">
+        <p>Final transaction snapshot (append-only).</p>
+        <div class="fact"><span>TXN</span><span class="conf" id="txid">pc_demo_local</span></div>
+        <div class="fact"><span>Item / price</span><span>Used 14" laptop / $700 meeting price</span></div>
+        <div class="fact"><span>ProofCart fee</span><span>$4.99 (not collected in this demo)</span></div>
+        <div class="fact"><span>Buyer acknowledgment</span><span>Recorded — rights not waived</span></div>
+        <div class="fact"><span>AI claims</span><span>None for authenticity, ownership, or hidden condition</span></div>
+      </section>
+    </div>
+    <div class="grid two">
+      <div class="card">
+        <h3>What the agent may say</h3>
+        <p>“A scratch appears visible on the lower-right corner in image 4.”</p>
+        <p class="tag">ALLOWED</p>
+      </div>
+      <div class="card">
+        <h3>What the agent may not say</h3>
+        <p>“This laptop is in excellent condition.”</p>
+        <p class="tag deny">DENIED</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h3>Agent loop</h3>
+      <ol>
+        <li>Capture</li><li>Extract</li><li>Compare</li><li>Flag uncertainty</li><li>Seller confirms</li>
+        <li>Buyer reviews</li><li>Human approval</li><li>Payment</li><li>Immutable snapshot</li><li>Audit</li>
+      </ol>
+      <p>AI cannot change price, accept evidence for the seller, acknowledge for the buyer, issue refunds, or mark payment successful.</p>
+    </div>
+    <footer>ProofCart AI · Sponsored by CREIGNIFICENT LLC · Not legal advice · Not an escrow · Not an authenticity certificate</footer>
+  </div>
+  <script>
+    const ids = ["new","cap","ai","lock","buyer","pay","receipt"];
+    function setStatus(s){ document.getElementById("txnStatus").textContent = "STATUS: " + s; }
+    function go(name){
+      ids.forEach(id => {
+        document.getElementById("s-"+id).classList.toggle("hidden", id !== name);
+        document.getElementById("t-"+id).classList.toggle("on", id === name);
+      });
+      const map = {new:"DRAFT",cap:"DRAFT",ai:"NEEDS REVIEW",lock:"BUYER REVIEWING",buyer:"BUYER REVIEWING",pay:"AWAITING PAYMENT",receipt:"PAID"};
+      if(name!=="receipt") setStatus(map[name] || "DRAFT");
+      if(name==="buyer") document.getElementById("bp").textContent = "$" + (document.getElementById("price").value || "700");
+    }
+    function mark(el){ el.classList.add("ok"); el.textContent = "Captured · private until authorized"; }
+    function confirmSeller(){ go("lock"); }
+    function ackBuyer(){
+      if(!document.getElementById("ack").checked){ alert("Acknowledgment required. This is not a waiver of statutory rights."); return; }
+      go("pay");
+    }
+    function fakePay(){
+      document.getElementById("txid").textContent = "pc_demo_" + Date.now().toString(36);
+      setStatus("PAID · WEBHOOK IDEMPOTENT (simulated)");
+      go("receipt");
+    }
+  </script>
+</body>
+</html>
